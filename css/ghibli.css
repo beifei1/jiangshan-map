@@ -17,6 +17,10 @@
   --hairline: rgba(79, 105, 68, .17);
   --card-shadow: 0 8px 28px #3e604414, 0 2px 5px #3e604408;
   --corner-radius: 18px;
+  --paper-surface: #fffdf3;
+  --forest-ink: #38583e;
+  --leaf-line: #c7d1b7;
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23626a43' opacity='.035' filter='url(%23grain)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
 }
 body { background: #eeeedf; }
 #atlas-shell { padding: 0 22px 16px; gap: 15px; }
@@ -33,8 +37,8 @@ body { background: #eeeedf; }
 .toolbar-divider { background: #bcc6ad; }
 #workspace-body { gap: 18px; grid-template-columns: minmax(0, 1fr) 326px; }
 #workspace-body.is-pane-collapsed { grid-template-columns: minmax(0, 1fr) 0; gap: 0; }
-#viewport-frame { border: 1px solid #b8c9ad; border-radius: 24px; box-shadow: 0 4px 18px #3f60430c; isolation: isolate; }
-#viewport-frame::after { content: ''; position: absolute; inset: 0; border: 6px solid #faf8e54d; border-radius: inherit; pointer-events: none; z-index: 2; }
+#viewport-frame { border: 1px solid #aebfa3; border-radius: 24px; box-shadow: 0 12px 28px #3f604312, 0 2px 4px #3f60430a; isolation: isolate; }
+#viewport-frame::after { content: ''; position: absolute; inset: 0; border: 5px solid #faf8e54d; box-shadow: inset 0 0 0 1px #fffef180, inset 0 0 25px #4b684512; border-radius: inherit; pointer-events: none; z-index: 2; }
 #terrain-relief-layer { opacity: .63; }
 #terrain-relief-img, .terrain-tile { filter: sepia(.2) saturate(.75) hue-rotate(20deg); }
 #atlas-svg.terrain-active .neighbor-shape { fill: #afbd8c16; stroke: #8da78566; }
@@ -59,23 +63,24 @@ body { background: #eeeedf; }
 .canvas-reset-btn { background: #fffdf0ee; border: 1px solid #b7c5a6; color: #506b46; border-radius: 10px; padding: 8px 12px; }
 #act-toggle-pane { background: #f8f6e6; border-color: #bdc9ae; color: #5b7950; }
 .travel-compass { position: absolute; width: 54px; height: 73px; right: 27px; bottom: 110px; color: #668369; opacity: .65; pointer-events: none; }
-#chronicle-pane { padding: 0 21px 20px; gap: 16px; border: 1px solid #d2d7bc; border-radius: 21px; background: #fbf9ed; scrollbar-width: thin; scrollbar-color: #bec9ac transparent; }
+#chronicle-pane { padding: 0 21px 20px; gap: 16px; border: 1px solid #d2d7bc; border-radius: 21px; background: var(--paper-grain), linear-gradient(115deg, #fffdf4, #f7f4e6); box-shadow: inset 3px 0 0 #ffffff80, 0 8px 24px #4a63360a; scrollbar-width: thin; scrollbar-color: #bec9ac transparent; }
 .dynasty-banner { padding-top: 7px; }
-.dynasty-title-row { border-bottom: 1px solid #ccd4b9; padding-bottom: 13px; }
-#dynasty-title { font-family: var(--serif-stack); color: #425f3c; font-size: 33px; font-weight: 600; letter-spacing: .12em; }
-.span-label { color: #798168; font-size: 12px; }
+.dynasty-title-row { position: relative; border-bottom: 1px solid #ccd4b9; padding-bottom: 16px; gap: 12px; }
+.dynasty-title-row::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 32px; height: 3px; border-radius: 2px; background: #92a376; }
+#dynasty-title { font-family: var(--serif-stack); color: #425f3c; font-size: 36px; font-weight: 600; letter-spacing: .14em; text-shadow: 0 1px #fff; }
+.span-label { color: #677354; font-size: 11px; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
 .seat-row { line-height: 1.7; margin-top: 12px; align-items: baseline; }
 .seat-tag { background: #e9edda; color: #5b7549; border-radius: 5px; flex-shrink: 0; }
 #dynasty-seat { font-size: 12px; }
-.dynasty-desc { font-size: 12px; line-height: 1.95; color: #68705b; }
+.dynasty-desc { font-size: 12px; line-height: 2.1; color: #5d6955; text-align: justify; }
 .milestone-section h3 { color: #526e45; font-size: 12px; letter-spacing: .2em; padding: 7px 0 13px; border-bottom: 1px dashed #c4cdaf; margin-bottom: 10px; }
-#milestone-list { gap: 8px; }
-#milestone-list li { padding: 10px 10px; border: 1px solid #dfe3cf; border-radius: 10px; background: #f4f4e7; font-size: 12px; line-height: 1.7; grid-template-columns: 64px minmax(0, 1fr); }
+#milestone-list { gap: 5px; }
+#milestone-list li { padding: 12px 10px; border: 1px solid #dfe3cf80; border-radius: 10px; background: #fffdf370; font-size: 12px; line-height: 1.7; grid-template-columns: 64px minmax(0, 1fr); }
 #milestone-list li:not(.polity-empty):not(.is-current):hover { background: #eaf0dd; border-color: #aebb96; }
 #milestone-list li.is-current { background: #e9efda; border-color: #a4b58c; box-shadow: inset 3px 0 #6d875a; }
-#milestone-list .ev-yr { color: #788050; }
+#milestone-list .ev-yr { color: #657744; font-family: var(--serif-stack); font-weight: 600; font-variant-numeric: tabular-nums; }
 .disclaimer-box { color: #6c765f; opacity: 1; font-size: 10px; line-height: 1.6; }
-#scrubber-dock { --scrubber-surface: #fbf9ee; border: 1px solid #d4d9bf; border-radius: 19px; padding: 18px 22px 17px; gap: 20px; box-shadow: 0 3px 12px #4a633608; }
+#scrubber-dock { --scrubber-surface: #fbf9ee; border: 1px solid #d4d9bf; border-radius: 19px; padding: 18px 22px 17px; gap: 20px; background: var(--paper-grain), linear-gradient(#fffdf5, #f7f5e8); box-shadow: inset 0 1px #fffef9, 0 5px 16px #4a63360c; }
 .round-btn { width: 43px; height: 43px; background: #658153; color: #fffdf0; border-color: #658153; box-shadow: 0 3px 0 #45613d; }
 .round-btn:hover { background: #506e44; color: #fffdf0; border-color: #506e44; }
 .play-speed-btn { background: #f1f1e3; border-color: #d6dcc3; color: #637753; box-shadow: none; }
@@ -92,6 +97,30 @@ body { background: #eeeedf; }
 .genealogy-title { color: #45623d; }
 .genealogy-list li.is-current { background-color: #e9efdc; }
 button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #5c7b4d; outline-offset: 3px; }
+/* 纸页与黄铜细节只落在界面，避免纹理干扰地理信息。 */
+.brand-leaf { filter: drop-shadow(0 2px 1px #557b5018); }
+.brand-group .seal-mark { text-shadow: 0 1px 0 #fffdf6b3; }
+.action-btn.subtle, .canvas-reset-btn, .year-stepper {
+  box-shadow: inset 0 1px 0 #ffffffb3, 0 2px 3px #42563b08;
+}
+.action-btn, .canvas-reset-btn, .step-nav-btn, #milestone-list li, .layer-chip {
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.action-btn.subtle.is-active, .action-btn.accent {
+  background: linear-gradient(#6c865a, #526f47);
+  box-shadow: inset 0 1px 0 #ffffff26, 0 2px 3px #3c543b1a;
+}
+.round-btn { background: linear-gradient(145deg, #7b9464, #536f47); }
+.round-btn:active { box-shadow: inset 0 2px 4px #304b3933; }
+#scrubber-track { box-shadow: inset 0 1px 3px #384f3426, 0 1px #fffdf5; }
+#scrubber-Bubble { font-variant-numeric: tabular-nums; }
+#map-key .key-heading { font-family: var(--serif-stack); letter-spacing: .1em; }
+.travel-compass { color: #657855; opacity: .8; filter: drop-shadow(0 1px 0 #ffffed); }
+.search-input-wrap, #map-key { box-shadow: inset 0 1px #fffef9, 0 4px 14px #3e604412; }
+#chronicle-pane .disclaimer-box { border-top: 1px solid var(--leaf-line); padding-top: 12px; }
+@media (hover: hover) {
+  .action-btn.subtle:hover, .canvas-reset-btn:hover { box-shadow: inset 0 1px #ffffffb3, 0 3px 8px #42563b14; }
+}
 @media (min-width: 901px) and (max-width: 1180px) {
   #atlas-shell { padding-left: 14px; padding-right: 14px; gap: 12px; }
   #workspace-body { grid-template-columns: minmax(0, 1fr) 290px; gap: 12px; }
@@ -161,7 +190,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
     radial-gradient(ellipse 90px 24px at 41% 50px, #fffdf4b3, transparent 70%),
     radial-gradient(ellipse 190px 40px at 63% 20px, #fffdf4c7, transparent 70%),
     radial-gradient(ellipse 80px 20px at 12% 64px, #fffdf499, transparent 70%),
-    linear-gradient(#d3e7e2 0, #e4eee0 70px, #eeeedf 170px);
+    radial-gradient(ellipse 480px 220px at 4% 0, #fff8dc99, transparent 80%),
+    linear-gradient(#cfe3df 0, #e4ecdf 90px, #eeeedf 210px);
 }
 /* 交互浮层：朱红描边统一换成苔绿，保留陶土色作地图标记强调 */
 .layers-popover, .more-popover { border-color: #b6c5a3; border-radius: 16px; box-shadow: var(--card-shadow); }
