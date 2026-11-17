@@ -1,0 +1,239 @@
+/**
+ * 功能说明：江山时序的自然手绘旅行手账主题，适配真实地图与历史交互。
+ * 作者：beifei0807
+ * 创建日期：2026-11-17
+ */
+:root {
+  --bg-parchment: #f7f3e7;
+  --bg-parchment-alt: #eeeeda;
+  --water-fill: #d5e6dc;
+  --province-fill: #e6e8cd;
+  --province-border: #a7b398;
+  --text-main: #354c3d;
+  --text-secondary: #62705a;
+  --text-muted: #79816c;
+  --vermilion: #a66248;
+  --amber-gold: #c5a45b;
+  --hairline: rgba(79, 105, 68, .17);
+  --card-shadow: 0 8px 28px #3e604414, 0 2px 5px #3e604408;
+  --corner-radius: 18px;
+}
+body { background: #eeeedf; }
+#atlas-shell { padding: 0 22px 16px; gap: 15px; }
+#nav-bar { min-height: 82px; padding: 10px 4px 0; border: 0; background: transparent; backdrop-filter: none; }
+.brand-group h1 { flex-wrap: wrap; column-gap: 15px; row-gap: 4px; }
+.brand-group .home-link { gap: 10px; }
+.brand-leaf { width: 39px; height: 44px; color: #557b50; }
+.brand-group .seal-mark { font-family: var(--serif-stack); font-size: 27px; font-weight: 700; letter-spacing: .14em; color: #36583e; }
+.brand-group .subtitle-mark { font-size: 11px; letter-spacing: .12em; border-left: 1px solid #b4bba4; padding-left: 15px; }
+.control-strip { gap: 8px; }
+.action-btn.subtle { background: #faf9ef; color: #566c50; border: 1px solid #d4dac5; border-radius: 11px; padding: 8px 11px; }
+.action-btn.subtle:hover { background: #e3ead6; border-color: #a9bc96; }
+.action-btn.subtle.is-active, .action-btn.accent { background: #597750; border-color: #597750; color: #fffcef; }
+.toolbar-divider { background: #bcc6ad; }
+#workspace-body { gap: 18px; grid-template-columns: minmax(0, 1fr) 326px; }
+#workspace-body.is-pane-collapsed { grid-template-columns: minmax(0, 1fr) 0; gap: 0; }
+#viewport-frame { border: 1px solid #b8c9ad; border-radius: 24px; box-shadow: 0 4px 18px #3f60430c; isolation: isolate; }
+#viewport-frame::after { content: ''; position: absolute; inset: 0; border: 6px solid #faf8e54d; border-radius: inherit; pointer-events: none; z-index: 2; }
+#terrain-relief-layer { opacity: .63; }
+#terrain-relief-img, .terrain-tile { filter: sepia(.2) saturate(.75) hue-rotate(20deg); }
+#atlas-svg.terrain-active .neighbor-shape { fill: #afbd8c16; stroke: #8da78566; }
+#atlas-svg.terrain-active .polity-shape { fill-opacity: .28; stroke-width: 1.45; }
+#atlas-svg.terrain-active .polity-shape.rival { fill-opacity: .25; stroke-width: 1.35; }
+#atlas-svg.terrain-active .polity-shape.protectorate { fill-opacity: .18; }
+.province-boundary-interior { stroke-opacity: .42; }
+#map-search-box { top: 22px; left: 22px; width: 276px; }
+.search-input-wrap { min-height: 43px; gap: 10px; padding: 10px 15px; background: #fffdf2f5; border: 1px solid #aebe9d; border-radius: 13px; box-shadow: 0 4px 12px #456b3c0d; }
+.search-ico { color: #6b875d; width: 16px; height: 16px; }
+#inp-map-search { font-size: 12px; }
+#map-search-box:focus-within .search-input-wrap { background: #fffef6; border-color: #6f8d60; box-shadow: 0 0 0 3px #88a16d22; }
+.search-results-list { background: #fffdf2f5; border-color: #c2cdb3; border-radius: 15px; }
+#start-guide { top: 23px; right: 21px; padding: 10px 12px; border-color: #c0cdae; background: #fffdf0e8; border-radius: 12px; }
+#start-guide .sg-item { font-size: 12px; color: #53744b; }
+#start-guide .sg-head { font-size: 11px; }
+#gesture-guide { top: 24px; right: 22px; max-width: 220px; line-height: 1.7; border: 0; background: #fffdf0b3; border-radius: 10px; }
+#map-key { left: 22px; bottom: 22px; padding: 12px 15px; gap: 7px; background: #fffdf0ee; border: 1px solid #c0c9ac; border-radius: 15px; box-shadow: 0 5px 18px #42633b12; }
+.key-heading { color: #526e49; }
+.swatch { border-radius: 50% 45% 50% 40%; }
+#canvas-br-dock { right: 22px; bottom: 22px; }
+.canvas-reset-btn { background: #fffdf0ee; border: 1px solid #b7c5a6; color: #506b46; border-radius: 10px; padding: 8px 12px; }
+#act-toggle-pane { background: #f8f6e6; border-color: #bdc9ae; color: #5b7950; }
+.travel-compass { position: absolute; width: 54px; height: 73px; right: 27px; bottom: 110px; color: #668369; opacity: .65; pointer-events: none; }
+#chronicle-pane { padding: 0 21px 20px; gap: 16px; border: 1px solid #d2d7bc; border-radius: 21px; background: #fbf9ed; scrollbar-width: thin; scrollbar-color: #bec9ac transparent; }
+.dynasty-banner { padding-top: 7px; }
+.dynasty-title-row { border-bottom: 1px solid #ccd4b9; padding-bottom: 13px; }
+#dynasty-title { font-family: var(--serif-stack); color: #425f3c; font-size: 33px; font-weight: 600; letter-spacing: .12em; }
+.span-label { color: #798168; font-size: 12px; }
+.seat-row { line-height: 1.7; margin-top: 12px; align-items: baseline; }
+.seat-tag { background: #e9edda; color: #5b7549; border-radius: 5px; flex-shrink: 0; }
+#dynasty-seat { font-size: 12px; }
+.dynasty-desc { font-size: 12px; line-height: 1.95; color: #68705b; }
+.milestone-section h3 { color: #526e45; font-size: 12px; letter-spacing: .2em; padding: 7px 0 13px; border-bottom: 1px dashed #c4cdaf; margin-bottom: 10px; }
+#milestone-list { gap: 8px; }
+#milestone-list li { padding: 10px 10px; border: 1px solid #dfe3cf; border-radius: 10px; background: #f4f4e7; font-size: 12px; line-height: 1.7; grid-template-columns: 64px minmax(0, 1fr); }
+#milestone-list li:not(.polity-empty):not(.is-current):hover { background: #eaf0dd; border-color: #aebb96; }
+#milestone-list li.is-current { background: #e9efda; border-color: #a4b58c; box-shadow: inset 3px 0 #6d875a; }
+#milestone-list .ev-yr { color: #788050; }
+.disclaimer-box { color: #6c765f; opacity: 1; font-size: 10px; line-height: 1.6; }
+#scrubber-dock { --scrubber-surface: #fbf9ee; border: 1px solid #d4d9bf; border-radius: 19px; padding: 18px 22px 17px; gap: 20px; box-shadow: 0 3px 12px #4a633608; }
+.round-btn { width: 43px; height: 43px; background: #658153; color: #fffdf0; border-color: #658153; box-shadow: 0 3px 0 #45613d; }
+.round-btn:hover { background: #506e44; color: #fffdf0; border-color: #506e44; }
+.play-speed-btn { background: #f1f1e3; border-color: #d6dcc3; color: #637753; box-shadow: none; }
+.year-stepper { padding: 7px; background: #f2f2e4; border-color: #d3dac0; border-radius: 12px; }
+.step-nav-btn { background: #e4ead5; color: #5a764b; }
+#scrubber-track { border-radius: 7px; }
+#scrubber-Bubble { background: #fffdf1; border-color: #b5c49d; color: #536c47; box-shadow: 0 2px 8px #4c6a3c13; }
+#scrubber-handle { background: #4f6d43; box-shadow: 0 0 0 2px #fbf9ee; }
+.band-cell { filter: saturate(.65); }
+.band-cell.is-active { filter: saturate(.85); }
+#genealogy-card, #challenge-card, #journey-card, #milestone-balloon, .layers-popover, .more-popover { background: #fffdf1f7; border-color: #b6c5a3; box-shadow: var(--card-shadow); }
+#genealogy-card { border-radius: 19px; }
+.genealogy-header { padding-bottom: 8px; border-bottom: 1px dashed #ccd4b9; }
+.genealogy-title { color: #45623d; }
+.genealogy-list li.is-current { background-color: #e9efdc; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #5c7b4d; outline-offset: 3px; }
+@media (min-width: 901px) and (max-width: 1180px) {
+  #atlas-shell { padding-left: 14px; padding-right: 14px; gap: 12px; }
+  #workspace-body { grid-template-columns: minmax(0, 1fr) 290px; gap: 12px; }
+  .brand-group .subtitle-mark { display: none; }
+  #start-guide { top: 76px; left: 22px; right: auto; }
+  #gesture-guide { display: none; }
+}
+@media (min-width: 1181px) and (max-width: 1450px) {
+  #start-guide .sg-head, #start-guide .sg-sep { display: none; }
+  #start-guide { gap: 9px; }
+}
+@media (max-width: 900px) {
+  #atlas-shell { padding: 0 10px 10px; gap: 10px; }
+  #nav-bar { min-height: 65px; padding: 8px 1px 0; }
+  .brand-group .seal-mark { font-size: 23px; }
+  .brand-group .subtitle-mark { display: none; }
+  .brand-leaf { width: 29px; height: 33px; }
+  .brand-group .home-link { gap: 6px; }
+  .control-strip { gap: 4px; }
+  .action-btn.subtle { padding: 6px 8px; }
+  #workspace-body { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  #workspace-body.is-pane-collapsed { grid-template-columns: minmax(0, 1fr); }
+  #viewport-frame { border-radius: 18px 18px 0 0; }
+  #chronicle-pane { border-top: 0; border-radius: 0 0 15px 15px; padding: 10px 14px; gap: 8px; }
+  .travel-compass { display: none; }
+  .dynasty-banner { padding-top: 0; }
+  #dynasty-title { font-size: 26px; }
+  .dynasty-title-row { padding-bottom: 5px; }
+  .seat-row { margin-top: 5px; }
+  #map-search-box { top: 12px; left: 12px; width: 238px; }
+  .search-input-wrap { min-height: 38px; padding: 7px 11px; }
+  #start-guide { top: 13px; right: 12px; padding: 8px; max-width: calc(100% - 270px); }
+  #map-key { left: 12px; bottom: 12px; padding: 8px 10px; gap: 4px; }
+  #canvas-br-dock { right: 12px; bottom: 12px; }
+  #scrubber-dock { padding: 11px 12px 14px; gap: 9px; border-radius: 15px; }
+  .round-btn { width: 36px; height: 36px; }
+  .year-stepper { padding: 4px; }
+}
+@media (max-width: 640px) {
+  #atlas-shell { padding: 0 7px max(7px, env(safe-area-inset-bottom)); gap: 7px; }
+  #nav-bar { min-height: 57px; gap: 6px; }
+  .brand-group { flex-shrink: 0; }
+  .brand-group .seal-mark { font-size: 19px; letter-spacing: .06em; }
+  .brand-leaf { width: 23px; height: 28px; }
+  .control-strip { gap: 3px; }
+  .action-btn.subtle { padding: 6px; font-size: 11px; border-radius: 8px; }
+  #viewport-frame { border-radius: 15px 15px 0 0; }
+  #map-search-box { left: 9px; top: 9px; width: 38px; }
+  #map-search-box .search-input-wrap { min-height: 36px; }
+  #map-search-box:focus-within, #map-search-box:has(#map-search-results:not(.is-hidden)), #map-search-box.is-expanded { width: calc(100% - 18px); }
+  #inp-map-search { font-size: 16px; }
+  #start-guide { top: 9px; left: 54px; right: 9px; max-width: none; min-height: 36px; padding: 6px 8px; }
+  #start-guide .sg-item { font-size: 11px; }
+  #map-key { left: 9px; bottom: 9px; max-width: calc(100% - 136px); padding: 6px 8px; font-size: 10px; border-radius: 10px; }
+  #canvas-br-dock { right: 9px; bottom: 9px; }
+  .canvas-reset-btn { padding: 5px 8px; }
+  #chronicle-pane { padding: 9px 12px; }
+  #scrubber-dock { padding: 9px 9px 12px; gap: 7px; }
+  .round-btn { width: 28px; height: 28px; }
+  #scrubber-rail-wrap { min-width: 0; }
+  .year-stepper { padding: 3px; }
+}
+/* 天空与云朵：页面顶部的淡彩水彩天色 */
+#atlas-shell {
+  background:
+    radial-gradient(ellipse 150px 34px at 34% 30px, #fffdf4d9, transparent 70%),
+    radial-gradient(ellipse 90px 24px at 41% 50px, #fffdf4b3, transparent 70%),
+    radial-gradient(ellipse 190px 40px at 63% 20px, #fffdf4c7, transparent 70%),
+    radial-gradient(ellipse 80px 20px at 12% 64px, #fffdf499, transparent 70%),
+    linear-gradient(#d3e7e2 0, #e4eee0 70px, #eeeedf 170px);
+}
+/* 交互浮层：朱红描边统一换成苔绿，保留陶土色作地图标记强调 */
+.layers-popover, .more-popover { border-color: #b6c5a3; border-radius: 16px; box-shadow: var(--card-shadow); }
+.layer-chip { background: #eef0e0; border-radius: 10px; color: #5c6b52; }
+.layer-chip:hover { background: #e3ead6; }
+.layer-chip:has(input:checked) { background: #dde8cd; border-color: #9fb48a; color: #44633c; }
+.more-pop-link { border-radius: 10px; }
+.more-pop-link:hover { background: #e9efdc; }
+.action-btn.accent { box-shadow: 0 3px 0 #45613d; }
+.action-btn.subtle:focus-visible { outline-color: #5c7b4d; }
+#milestone-balloon { border-color: #a9bb95; border-radius: 16px; }
+#milestone-balloon::before { border-color: #a9bb95; }
+#milestone-balloon .ep-place { border-color: #c2cfae; background: #eef2e1; }
+#milestone-balloon .ep-place:hover { background: #dfe9cf; border-color: #94ab7e; }
+#milestone-balloon .ep-close { background: #e9eedc; }
+#milestone-balloon .ep-relic-seal { color: #8f553e; }
+#milestone-balloon .ep-relic-seal:hover { border-color: #a66248; }
+#milestone-balloon .ep-relic-seal .seal-stamp, #milestone-list .ev-seal-tag { background: #a66248; border-color: #8f553e; }
+.gen-filter-pill { border-color: #b9c8a5; background: #eef2e1; }
+.gen-filter-pill:hover { background: #dfe9cf; border-color: #94ab7e; }
+.genealogy-list li:hover { background: #eef2e1; }
+.genealogy-list li.is-current { background: #e3ebd3; }
+.t-cap-badge { background: #e9edda; border-color: #c2cfae; }
+#genealogy-lore, .genealogy-list li.pass-lore-banner { background: linear-gradient(135deg, #e6eed8, #f3efd6); border-color: #b9c8a5; }
+#genealogy-lore:hover, .genealogy-list li.pass-lore-banner:hover { background: linear-gradient(135deg, #dde8cd, #eeeaca); }
+.pass-lore-range, .settlement-node.is-pass .name.pass-name { color: #6f5136; fill: #6f5136; }
+.t-events { border-left-color: #a9bb95; }
+.t-ev-row:hover { background: #e6eed8; }
+.phase-dot { background: #b9c3a8; }
+.phase-dot:hover { background: #7f9a6b; }
+.search-results-list li:hover, .search-results-list li.is-active { background: #e9efdc; }
+.sr-tag, .sr-tag[data-bucket='regime'] { background: #e3ead6; }
+.sr-tag[data-bucket='person_era'], .sr-eg-pill, .sr-quiz-link { color: #7a6238; }
+.sr-cycle-btn:hover { border-color: #94ab7e; }
+.sr-chip-btn:hover { border-color: #94ab7e; background: #eef2e1; }
+.sr-section-head { border-bottom-color: #d6dcc3 !important; }
+#hover-tip { border-radius: 12px; }
+#hover-tip .tt-trace-btn { background: #7f9a6b80; }
+#hover-tip .tt-trace-btn:active { background: #7f9a6bb3; }
+#challenge-card, #journey-card { border-color: #b6c5a3; border-radius: 18px; }
+.pill-badge, .clue-tag { background: #e3ead6; color: #4d6b43; }
+.challenge-clue-box { background: #f1f3e4; border-radius: 12px; }
+.play-speed-btn.is-custom-speed { border-color: #8fa77b; background: #e3ead6; }
+#scrubber-track:focus-visible { box-shadow: 0 0 0 3px #88a16d40; }
+.step-nav-btn:hover { background: #d6e1c4; border-color: #94ab7e; }
+.key-entry.is-interactive:hover { background: #e6eed8; }
+.key-entry.is-interactive.is-active { background: #dbe6ca; }
+#act-toggle-pane { box-shadow: -2px 0 10px #42633b14; }
+#act-toggle-pane:hover { border-color: #7f9a6b; box-shadow: -3px 0 12px #42633b24; }
+.ev-journey-btn, .mobile-chronicle-btn { border-color: #a9bb95; background: #eaf0dd; color: #4d6b43; }
+.jc-top-bar { border-bottom-color: #d2d9bf; }
+.jc-nav-btn.is-primary { background: #dfe9cf; border-color: #94ab7e; color: #44633c; }
+.cr-stop-pill:hover { border-color: #597750; color: #597750; }
+.cr-stop-pill.is-current { background: #597750; border-color: #597750; }
+.cr-stop-num { color: #597750; }
+.cr-stop-pill { border-color: #b9c8a5; }
+.cr-stop-num { background: #dfe9cf; }
+.cr-stop-pill.is-current .cr-stop-num { background: #fffaf23d; color: #fffaf2; }
+.ev-journey-btn:hover { background: #597750; color: #fffcef; }
+.key-mobile-toggle { border-color: #b7c5a6; }
+.mp-title-remove { background: #e6ead8; }
+.mp-title-remove:hover { background: #d6e1c4; }
+.mp-span-overlap { background: #7f9a6b1f; border-color: #7f9a6b4d; }
+.person-ev-subnote, #workspace-body.is-mobile-chronicle-open #chronicle-pane .dynasty-banner { border-color: #d2d9bf; }
+.ev-seal-tag.ev-story-tag { color: #8f553e; }
+.ev-seal-tag.ev-story-tag:hover { background: #a66248; border-color: #a66248; }
+.prefecture-shape:hover, .prefecture-shape.is-hovered { fill: #7f9a6b33; }
+.prefecture-boundary-mesh { stroke: #4f694426; }
+::selection { background: #cfe0bb; color: #2f4a35; }
+html.is-embed #atlas-shell { padding: 0; gap: 0; }
+html.is-embed #viewport-frame, html.is-embed #scrubber-dock { border-radius: 0; }
+html.is-embed .travel-compass { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
